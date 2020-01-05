@@ -3,9 +3,9 @@ import { Grid, TextField, Button } from "@material-ui/core";
 
 const ContactInfo = props => {
 
-    const { values, fillContactHandler, clearContactHandler, nextHandler } = props;
+    const { values, fillHandler, clearHandler, nextHandler } = props;
     return (
-        <Grid container spacing={2} style={{ textAlign: "center" }}>
+        <Grid container spacing={2}>
             <Grid item xs={12}>
                 <TextField fullWidth label="Name" variant="outlined" value={values.name} />
             </Grid>
@@ -22,8 +22,8 @@ const ContactInfo = props => {
                 <TextField fullWidth label="LinkedIn Profile" variant="outlined" value={values.linkedIn} />
             </Grid>
             <Grid item xs={12}>
-                <Button variant="outlined" onClick={fillContactHandler}>Auto Fill</Button>
-                {" "}<Button variant="outlined" color="secondary" onClick={clearContactHandler}>Clear</Button>
+                <Button variant="outlined" onClick={fillHandler}>Auto Fill</Button>
+                {" "}<Button variant="outlined" color="secondary" onClick={clearHandler}>Clear</Button>
                 {" "}<Button variant="outlined" color="primary" onClick={nextHandler}>Next</Button>
             </Grid>
         </Grid>

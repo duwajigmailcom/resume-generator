@@ -3,6 +3,8 @@ import { Tabs, Tab } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import ContactInfo from "./components/contactInfo";
 import Education from "./components/education";
+import Experience from "./components/experience";
+import Resume from "./components/resume";
 
 class App extends Component {
   constructor() {
@@ -14,6 +16,19 @@ class App extends Component {
         tel: "",
         email: "",
         linkedIn: ""
+      },
+      education: {
+        school: "",
+        address: "",
+        major: "",
+        degree: ""
+      },
+      experience: {
+        company: "",
+        address: "",
+        startDate: "",
+        endDate: "",
+        desc: ""
       }
     };
     this.firstNames = ["Emma", "Olivia", "Ava", "Isabella", "Sophia", "Charlotte", "Mia", "Amelia", "Harper", "Evelyn"];
@@ -22,6 +37,9 @@ class App extends Component {
     this.stateNames = ["CA", "NC", "SC", "FL", "MA", "NH", "NB", "WA", "AZ", "IL", "OH"];
     this.zipCodes = ["87654", "44567", "98875", "34534", "34523", "34567", "16534", "23434", "45673", "23456", "23423"];
     this.telNumbers = ["453 345 3453", "564 343 4553", "768 345 4564", "976 645 2334"];
+
+    this.schoolNames = ["University of Texas", "University of Florida", "University of New York", "University of Virginia", "University of Arizona"];
+    this.companyNames = ["Google", "Facebook", "Uber", "Walmart", "IBM", "College Board"];
   };
 
   fillContact = () => {
@@ -31,12 +49,13 @@ class App extends Component {
     const randomStateName = this.stateNames[this.getRandomIndex(this.stateNames.length)];
     const randomZipCode = this.zipCodes[this.getRandomIndex(this.zipCodes.length)];
     const randomTelNumber = this.telNumbers[this.getRandomIndex(this.telNumbers.length)];
-    this.setState({ contactInfo: {
-      name: `${randomFirstName} ${randomLastName}`,
-      address: `${randomCityName}, ${randomStateName} ${randomZipCode}`,
-      tel: `${randomTelNumber}`,
-      email: `${randomFirstName.toLowerCase()}.${randomLastName.toLowerCase()}@gmail.com`,
-      linkedIn: `https://www.linkedin.com/in/${randomFirstName.toLowerCase()}${randomLastName.toLowerCase()}`
+    this.setState({
+      contactInfo: {
+        name: `${randomFirstName} ${randomLastName}`,
+        address: `${randomCityName}, ${randomStateName} ${randomZipCode}`,
+        tel: randomTelNumber,
+        email: `${randomFirstName.toLowerCase()}.${randomLastName.toLowerCase()}@gmail.com`,
+        linkedIn: `https://www.linkedin.com/in/${randomFirstName.toLowerCase()}${randomLastName.toLowerCase()}`
       }
     });
   };
@@ -53,6 +72,48 @@ class App extends Component {
     });
   };
 
+  fillEducation = () => {
+    const randomSchoolName = this.schoolNames[this.getRandomIndex(this.schoolNames.length)];
+    const randomCityName = this.cityNames[this.getRandomIndex(this.cityNames.length)];
+    const randomStateName = this.stateNames[this.getRandomIndex(this.stateNames.length)];
+    this.setState({
+      education: {
+        school: randomSchoolName,
+        address: `${randomCityName}, ${randomStateName}`,
+      }
+    });
+  };
+
+  clearEducation = () => {
+    this.setState({
+      education: {
+        school: "",
+        address: ""
+      }
+    });
+  };
+
+  fillExperience = () => {
+    const randomCompanyName = this.companyNames[this.getRandomIndex(this.companyNames.length)];
+    const randomCityName = this.cityNames[this.getRandomIndex(this.cityNames.length)];
+    const randomStateName = this.stateNames[this.getRandomIndex(this.stateNames.length)];
+    this.setState({
+      experience: {
+        company: randomCompanyName,
+        address: `${randomCityName}, ${randomStateName}`,
+      }
+    });
+  };
+
+  clearExperience = () => {
+    this.setState({
+      experience: {
+        company: "",
+        address: ""
+      }
+    });
+  };
+  
   getRandomIndex = max => {
     const randomIndex = Math.floor(Math.random() * max);
     if (randomIndex < 0 || randomIndex > max)
@@ -61,7 +122,22 @@ class App extends Component {
   };
 
   nextStep = () => {
-    console.log("next");
+    const { history } = this.props;
+    const path = history && history.location && history.location.pathname;
+    switch (path) {
+      case "/":
+        history.push("/education");
+        break;
+      case "/education":
+        history.push("/experience");
+        break;
+      case "/experience":
+        history.push("/resume");
+        break;
+      default:
+        history.push("/");
+        break;
+    }
   };
 
   onTabChange = (event, newValue) => {
@@ -77,29 +153,41 @@ class App extends Component {
           <Tab label="Contact Info" value="/" />
           <Tab label="Education" value="/education" />
           <Tab label="Experience" value="/experience" />
+          <Tab label="Resume" value="/resume" />
         </Tabs>
-        <div style={{padding: 24}}>
+        <div style={{ padding: 24 }}>
           {path === "/" &&
             <ContactInfo
               values={this.state.contactInfo}
-              fillContactHandler={this.fillContact}
-              clearContactHandler={this.clearContact}
+              fillHandler={this.fillContact}
+              clearHandler={this.clearContact}
               nextHandler={this.nextStep} />
           }
           {path === "/education" &&
-            <Education />
+            <Education
+              values={this.state.education}
+              fillHandler={this.fillEducation}
+              clearHandler={this.clearEducation}
+              nextHandler={this.nextStep} />
           }
           {path === "/experience" &&
-            <Experience />
+            <Experience
+              values={this.state.experience}
+              fillHandler={this.fillExperience}
+              clearHandler={this.clearExperience}
+              nextHandler={this.nextStep} />
+          }
+          {path === "/resume" &&
+            <Resume
+              values={this.state}
+              fillHandler={this.fillContact}
+              clearHandler={this.clearContact}
+              nextHandler={this.nextStep} />
           }
         </div>
       </Fragment>
     )
   }
-}
-
-function Experience() {
-  return <h2>Experience</h2>;
 }
 
 export default withRouter(App);

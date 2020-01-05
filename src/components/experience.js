@@ -1,13 +1,13 @@
 import React from "react";
 import { Grid, TextField, Button } from "@material-ui/core";
 
-const Education = props => {
+const Experience = props => {
 
     const { values, fillHandler, clearHandler, nextHandler } = props;
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>
-                <TextField fullWidth label="School" variant="outlined" value={values.school} />
+                <TextField fullWidth label="Company" variant="outlined" value={values.company} />
             </Grid>
             <Grid item xs={12}>
                 <TextField fullWidth label="City, State" variant="outlined" value={values.address} />
@@ -21,4 +21,4 @@ const Education = props => {
     )
 }
 
-export default Education;
+export default Experience;

@@ -35,6 +35,16 @@ class ContactInfo extends Component {
         });
     };
 
+    clear = () => {
+        this.setState({
+            name: "",
+            address: "",
+            tel: "",
+            email: "",
+            linkedIn: ""
+        });
+    };
+
     getRandomIndex = max => {
         const randomIndex = Math.floor(Math.random() * max);
         if (randomIndex < 0 || randomIndex > max)
@@ -44,7 +54,7 @@ class ContactInfo extends Component {
 
     render() {
         return (
-            <Grid container spacing={3} style={{ textAlign: "center" }}>
+            <Grid container spacing={2} style={{ textAlign: "center" }}>
                 <Grid item xs={12}>
                     <TextField fullWidth label="Name" variant="outlined" value={this.state.name} />
                 </Grid>
@@ -61,7 +71,9 @@ class ContactInfo extends Component {
                     <TextField fullWidth label="LinkedIn Profile" variant="outlined" value={this.state.linkedIn} />
                 </Grid>
                 <Grid item xs={12}>
-                    <Button variant="outlined" onClick={this.autoGenerateContact}>Auto Generate</Button> <Button variant="outlined" color="primary">Save</Button>
+                    <Button variant="outlined" onClick={this.autoGenerateContact}>Auto Generate</Button> 
+                    {" "}<Button variant="outlined" color="secondary" onClick={this.clear}>Clear</Button>
+                    {" "}<Button variant="outlined" color="primary">Next</Button>
                 </Grid>
             </Grid>
         )

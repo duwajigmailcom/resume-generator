@@ -13,16 +13,20 @@ class App extends Component {
     return (
       <Router>
         <Tabs>
-          <Link to="/"><Tab label="Home"></Tab></Link>
-          <Link to="/contactInfo"><Tab label="Contact Info"></Tab></Link>
+          <Link to="/"><Tab label="Contact Info"></Tab></Link>
+          <Link to="/education"><Tab label="Education"></Tab></Link>
+          <Link to="/experience"><Tab label="Experience"></Tab></Link>
         </Tabs>
-        <div style={{padding: 24}}>
+        <div style={{ padding: 24 }}>
           <Switch>
-            <Route path="/contactInfo">
-              <ContactInfo />
+            <Route path="/education">
+              <Education />
+            </Route>
+            <Route path="/experience">
+              <Experience />
             </Route>
             <Route path="/">
-              <Home />
+              <ContactInfo />
             </Route>
           </Switch>
         </div>
@@ -31,10 +35,12 @@ class App extends Component {
   }
 }
 
-function Home() {
-  return <h2>Home</h2>;
+function Education() {
+  return <h2>Education</h2>;
 }
 
-
+function Experience() {
+  return <h2>Experience</h2>;
+}
 
 export default App;

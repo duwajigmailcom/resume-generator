@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Tabs, Tab } from "@material-ui/core"
 import ContactInfo from "./components/contactInfo"
+import Education from "./components/education"
 import {
   BrowserRouter as Router,
   Switch,
@@ -33,10 +34,6 @@ class App extends Component {
       </Router>
     )
   }
-}
-
-function Education() {
-  return <h2>Education</h2>;
 }
 
 function Experience() {

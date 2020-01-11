@@ -26,6 +26,7 @@ class App extends Component {
       experience: {
         company: "",
         address: "",
+        title: "",
         startDate: "",
         endDate: "",
         desc: ""
@@ -39,8 +40,16 @@ class App extends Component {
     this.telNumbers = ["453 345 3453", "564 343 4553", "768 345 4564", "976 645 2334"];
 
     this.schoolNames = ["University of Texas", "University of Florida", "University of New York", "University of Virginia", "University of Arizona"];
+    this.majors = ["Computer Science", "Math", "Law", "History", "Music", "Art"];
+    this.degrees = ["BS", "BA", "MA"];
+
     this.companyNames = ["Google", "Facebook", "Uber", "Walmart", "IBM", "College Board"];
+    this.titles = ["Software Developer", "Project Manager", "Scrum Master", "Dev Ops Engineer", "Sales Manager"];
   };
+
+  getParagraph = () => {
+    return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ultrices odio eu enim rutrum, tincidunt facilisis nibh varius. Morbi id massa eu elit ornare interdum suscipit eget metus. Vestibulum turpis turpis, tempus sed erat id, porta posuere dolor. Aenean suscipit, mauris vitae facilisis suscipit, mauris mauris elementum metus, et aliquam turpis neque et mi. Nam euismod neque at sapien finibus varius. Aenean sagittis nulla lacus, consequat ullamcorper magna sollicitudin at. Vestibulum tempus tortor et odio placerat laoreet et in elit. Suspendisse eu arcu condimentum, fermentum lacus et, facilisis ante. Donec porta ante at eleifend feugiat.";
+  }
 
   fillContact = () => {
     const randomFirstName = this.firstNames[this.getRandomIndex(this.firstNames.length)];
@@ -80,6 +89,8 @@ class App extends Component {
       education: {
         school: randomSchoolName,
         address: `${randomCityName}, ${randomStateName}`,
+        degree: this.degrees[this.getRandomIndex(this.degrees.length)],
+        major: this.majors[this.getRandomIndex(this.majors.length)]
       }
     });
   };
@@ -88,19 +99,22 @@ class App extends Component {
     this.setState({
       education: {
         school: "",
-        address: ""
+        address: "",
+        major: "",
+        degree: ""
       }
     });
   };
 
   fillExperience = () => {
-    const randomCompanyName = this.companyNames[this.getRandomIndex(this.companyNames.length)];
     const randomCityName = this.cityNames[this.getRandomIndex(this.cityNames.length)];
     const randomStateName = this.stateNames[this.getRandomIndex(this.stateNames.length)];
     this.setState({
       experience: {
-        company: randomCompanyName,
+        company: this.companyNames[this.getRandomIndex(this.companyNames.length)],
         address: `${randomCityName}, ${randomStateName}`,
+        title: this.titles[this.getRandomIndex(this.titles.length)],
+        desc: this.getParagraph()
       }
     });
   };
@@ -109,11 +123,13 @@ class App extends Component {
     this.setState({
       experience: {
         company: "",
-        address: ""
+        address: "",
+        title: "",
+        desc: ""
       }
     });
   };
-  
+
   getRandomIndex = max => {
     const randomIndex = Math.floor(Math.random() * max);
     if (randomIndex < 0 || randomIndex > max)
